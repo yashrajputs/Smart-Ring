@@ -4,6 +4,7 @@ import Chart from 'chart.js/auto';
 import MapUI from './MapUI';
 import AIRecommendations from './AIRecommendations';
 import PropTypes from 'prop-types';
+import CameraFeature from './CameraFeature';
 
 function BatteryIndicator({ level = 100 }) {
   const getColor = () => {
@@ -98,7 +99,7 @@ export default function Dashboard() {
         }
       }
     });
-  }, []);
+  }, [heartRateData, motionData]);
 
   useEffect(() => {
     // Initialize temperature chart
@@ -130,7 +131,7 @@ export default function Dashboard() {
     }, 60000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [temperatureData]);
 
   // Mock user data - replace with actual user data from authentication
   const user = {
@@ -139,7 +140,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gray-900">
+    <div className="w-full">
       <header className="bg-gradient-to-r from-blue-600 to-purple-600 shadow-md">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-white">Smart Ring Dashboard</h1>
@@ -194,8 +195,13 @@ export default function Dashboard() {
           {/* Location Card */}
           <div className="bg-gray-800 rounded-xl shadow-lg p-6 row-span-2">
             <h2 className="text-xl font-bold text-white mb-4">Location</h2>
-            <div className="h-96">
+            <div className="h-96 mb-6">
               <MapUI position={[51.505, -0.09]} zoom={13} />
+            </div>
+            {/* Camera Feature */}
+            <div className="mt-6">
+              <h2 className="text-xl font-bold text-white mb-4">Camera</h2>
+              <CameraFeature />
             </div>
           </div>
 
